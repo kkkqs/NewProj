@@ -40,6 +40,7 @@
 		"utility": "cpp",
 		"typeinfo": "cpp",
 		"random": "cpp",
-		"mutex": "cpp"
+		"mutex": "cpp",
+		"string": "cpp"
 	}
 }

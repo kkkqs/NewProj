@@ -58,5 +58,11 @@ ControllerModule<float, float> chassisControllerModule(chassisPID, chassisFeedba
 // KalmanFilter chassisKFilter;
 #pragma endregion
 
+#pragma region Circle
+IMUFeedBack imuFeedBack(imu);
+PIDControllerAlgorithm chassisRotaionPID(0.8f, 0.2f, 0.01f);
+ControllerModule<float, float> chassisCircleModule(chassisRotaionPID, imuFeedBack);
+#pragma endregion
+
 // define variable for remote controller enable/disable
 bool RemoteControlCodeEnabled = true;

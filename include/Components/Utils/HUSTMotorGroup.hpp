@@ -15,6 +15,7 @@ public:
 
     void setSpeed(float speed, vex::velocityUnits units = vex::velocityUnits::pct) {_speedPercent = speed, _units = units;};
     void move() {_motorGroup->setVelocity(_speedPercent, _units); _motorGroup->spin(vex::forward);};
+    void revs() {_motorGroup->setVelocity(_speedPercent, _units); _motorGroup->spin(vex::reverse);};
     void stop() {_motorGroup->stop();}
     void setBrakeMode(vex::brakeType brakeType) {_motorGroup->setStopping(brakeType);}
     int getMotorAngle(vex::rotationUnits units) {return _motorGroup->position(units);}

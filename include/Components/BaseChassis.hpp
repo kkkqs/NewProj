@@ -48,6 +48,10 @@ public:
     
     void stop() {for (auto& motorGroup : motorGroups) motorGroup.stop();}
     void move() {for (auto& motorGroup : motorGroups) motorGroup.move();}
+    void rotate() {
+        size_t len=motorGroups.size(),i;
+        for (i=0;i<len/2;++i) motorGroups[i].move();
+        for (;i<len;++i) motorGroups[i].revs();}
 
     virtual void setSpeed(float speed, vex::velocityUnits unit = vex::velocityUnits::pct) = 0;
     virtual void setFreeSpeed(float x, float r, float y = 0, vex::velocityUnits unit = vex::velocityUnits::pct) = 0;

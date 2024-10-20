@@ -32,3 +32,15 @@ public:
     float feedback() override {return float(_motor->position(vex::rotationUnits::deg));}
     void reset() override {_motor->resetPosition();}
 };
+
+class IMUFeedBack : public HUSTFeedback<float> {
+private:
+    vex::inertial* _imu;
+public:
+    IMUFeedBack(vex::inertial imu):_imu(&imu) {}
+    float feedback() override {return float(_imu->heading());}
+    void reset() override {_imu->resetHeading();}
+};
+
+
+//class OpticalFeedback : public HUSTFeedback<int> 

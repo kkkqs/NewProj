@@ -28,21 +28,22 @@ vex::competition Competition;
 /*---------------------------------------------------------------------------*/
 
 void pre_auton(void) {
-  auto move1 = new MoveNode(500, 20000);
-  auto move2 = new MoveNode(-500, 20000);
-  move1->setNextNode(move2);
+  // auto move1 = new MoveNode(500, 20000);
+  // auto move2 = new MoveNode(-500, 20000);
+  // auto move3 = new RotateNode();
+  // move1->setNextNode(move2);
 
-  auto delay1 = new DelayNode(3000);
-  auto move3 = new MoveNode(400, 20000);
-  delay1->setNextNode(move3);
+  // auto delay1 = new DelayNode(3000);
+  // auto move3 = new MoveNode(400, 20000);
+  // delay1->setNextNode(move3);
 
-  #pragma region JudgeNodeTest
-  auto move4 = new MoveNode(500, 20000);
-  auto distanceJudge = new DistanceJudgeNode(300, chassisControllerModule);
-  move4->addJuedgeNode(distanceJudge);
-  #pragma endregion
+  // #pragma region JudgeNodeTest
+  // auto move4 = new MoveNode(500, 20000);
+  // auto distanceJudge = new DistanceJudgeNode(300, chassisControllerModule);
+  // move4->addJuedgeNode(distanceJudge);
+  // #pragma endregion
 
-  StateMachine::addAutoNode(move4);
+  // StateMachine::addAutoNode(move4);
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
 }
@@ -88,6 +89,7 @@ void mannualFuncs() {
 
 int main() {
   CenterProcess::init();
+  Input.setVelocity(100, vex::percentUnits::pct);
   // pre_auton();
   while (true) {
     CenterProcess::update();

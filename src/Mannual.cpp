@@ -21,10 +21,6 @@ namespace Mannual {
     int MannualConfig::changeif = 0;
 
     void MannualMove(float speedX, float speedY) {
-        if (std::abs(speedX) < 5.0 && std::abs(speedY) < 5.0) {
-            chassis.stop();
-            return;
-        }
         enum Status {
             Forward,
             Reverse
@@ -32,6 +28,7 @@ namespace Mannual {
         static Status status = Status::Forward;
         static int A = 0;
         A = MannualConfig::pressChange;
+        printf("%d\n", status);
         switch (status){
             case Status::Forward:
                 if (A) status = Status::Reverse;
@@ -42,6 +39,10 @@ namespace Mannual {
                 break;
             default:
                 break;
+        }
+        if (std::abs(speedX) < 5.0 && std::abs(speedY) < 5.0) {
+            chassis.stop();
+            return;
         }
         chassis.setFreeSpeed(speedX, speedY);
         chassis.move();
@@ -56,7 +57,7 @@ namespace Mannual {
         static bool A = 0, B = 0;
         A = MannualConfig::pressInputIn;
         B = MannualConfig::pressInputOut;
-        Input.setVelocity(200, vex::percentUnits::pct);
+        // printf("x\n");
         switch (status) {
             case Status::Idle:
                 if (A) {
@@ -77,6 +78,7 @@ namespace Mannual {
                 }
                 break;
             case Status::Reverse:
+                // printf("3", status);
                 if (A) {
                     Input.spin(vex::directionType::fwd);
                     status = Status::Forward;
@@ -147,7 +149,7 @@ namespace Mannual {
         static int A = 0;
         static HUSTTimer timer;
         A = MannualConfig::pressCatchPlant;
-        printf("%d\n", timer.getTimeMsec());
+        // printf("%d\n", timer.getTimeMsec());
         switch (status) {
             case Status::Idle:
                 if (A) {

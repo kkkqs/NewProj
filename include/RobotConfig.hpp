@@ -13,6 +13,8 @@ extern vex::rotation r1;
 extern vex::rotation r2;
 extern vex::inertial imu;
 
+extern vex::motor InputL;
+extern vex::motor InputR;
 extern vex::motor_group Input;
 extern vex::motor_group Circle;
 
@@ -22,4 +24,5 @@ extern vex::motor_group Claw; // forward -> up, recerse -> down
 
 extern Chassis chassis;
 extern ControllerModule<float, float> chassisControllerModule;
+extern ControllerModule<float, float> chassisCircleModule;
 extern KalmanFilter KFilter;

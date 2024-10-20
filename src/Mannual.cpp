@@ -5,8 +5,9 @@ namespace Mannual {
     int MannualConfig::pressInputOut = 0;
     int MannualConfig::pressCircle = 0;
     int MannualConfig::pressCatchPlant = 0;
+    int MannualConfig::pressChange = 0;
     
-    int MannualConfig::circleReverseTime = 1000;
+    int MannualConfig::circleReverseTime = 400;
     float MannualConfig::circleReverseTorque = 0.6f;
     float MannualConfig::circleForwardSpeed = 200.0f;
     float MannualConfig::circleReverseSpeed = 50.0f;
@@ -17,13 +18,31 @@ namespace Mannual {
     float MannualConfig::clawDownSpeed = 15.0f;
     float MannualConfig::clawUpStopTorque = 0.5f;
     float MannualConfig::clawDownStopTorque = 0.35f;
+    int MannualConfig::changeif = 0;
 
     void MannualMove(float speedX, float speedY) {
         if (std::abs(speedX) < 5.0 && std::abs(speedY) < 5.0) {
             chassis.stop();
             return;
         }
-        //static int _changeif = (MannualConfig::changeif * 2) - 1; 
+        enum Status {
+            Forward,
+            Reverse
+        };
+        static Status status = Status::Forward;
+        static int A = 0;
+        A = MannualConfig::pressChange;
+        switch (status){
+            case Status::Forward:
+                if (A) status = Status::Reverse;
+                break;
+            case Status::Reverse:
+                speedX = -speedX;
+                if (A) status = Status::Forward;
+                break;
+            default:
+                break;
+        }
         chassis.setFreeSpeed(speedX, speedY);
         chassis.move();
     }
@@ -34,7 +53,7 @@ namespace Mannual {
             Reverse
         };
         static Status status = Status::Idle;
-        static int A = 0, B = 0;
+        static bool A = 0, B = 0;
         A = MannualConfig::pressInputIn;
         B = MannualConfig::pressInputOut;
         Input.setVelocity(200, vex::percentUnits::pct);

@@ -14,6 +14,18 @@ private:
     bool _first;
 };
 
+class RotateNode : public AutoNode {
+public:
+    RotateNode(float angle, float maxSpeed = 50.0, int maxTime = 2000):
+    AutoNode(maxTime), _angle(angle), _maxSpeed(maxSpeed), _first(true) {}
+    void complement() override;
+private:
+    float _angle;
+    float _maxSpeed;
+    vex::velocityUnits _unit;
+    bool _first;
+};
+
 class DelayNode : public AutoNode {
 public:
     DelayNode(float time);

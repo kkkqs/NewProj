@@ -28,6 +28,10 @@ void MoveNode::complement() {
     }
 }
 
+void RotateNode::complement() {
+
+}
+
 void DelayNode::complement() {
     if (CenterProcess::getNowTimeMsec() - _startTime > _time) {
         _done = true;

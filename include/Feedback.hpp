@@ -43,4 +43,11 @@ public:
 };
 
 
-//class OpticalFeedback : public HUSTFeedback<int> 
+class OpticalFeedback : public HUSTFeedback<int> {
+private:
+    vex::optical* _optical;
+public:
+    OpticalFeedback(vex::optical Optical):_optical(&Optical) {}
+    int feedback() override {return _optical->hue();}
+    void reset() override {}
+};

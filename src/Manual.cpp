@@ -1,33 +1,33 @@
-#include "Mannual.hpp"
+#include "Manual.hpp"
 
-namespace Mannual {
-    int MannualConfig::pressInputIn = 0;
-    int MannualConfig::pressInputOut = 0;
-    int MannualConfig::pressCircle = 0;
-    int MannualConfig::pressCatchPlant = 0;
-    int MannualConfig::pressChange = 0;
+namespace Manual {
+    int ManualConfig::pressInputIn = 0;
+    int ManualConfig::pressInputOut = 0;
+    int ManualConfig::pressCircle = 0;
+    int ManualConfig::pressCatchPlant = 0;
+    int ManualConfig::pressChange = 0;
     
-    int MannualConfig::circleReverseTime = 400;
-    float MannualConfig::circleReverseTorque = 0.6f;
-    float MannualConfig::circleForwardSpeed = 200.0f;
-    float MannualConfig::circleReverseSpeed = 50.0f;
+    int ManualConfig::circleReverseTime = 400;
+    float ManualConfig::circleReverseTorque = 0.6f;
+    float ManualConfig::circleForwardSpeed = 200.0f;
+    float ManualConfig::circleReverseSpeed = 50.0f;
 
-    int MannualConfig::clawUpTime = 2500;
-    int MannualConfig::clawDownTime = 2000;
-    float MannualConfig::clawUpSpeed = 15.0f;
-    float MannualConfig::clawDownSpeed = 15.0f;
-    float MannualConfig::clawUpStopTorque = 0.5f;
-    float MannualConfig::clawDownStopTorque = 0.35f;
-    int MannualConfig::changeif = 0;
+    int ManualConfig::clawUpTime = 2500;
+    int ManualConfig::clawDownTime = 2000;
+    float ManualConfig::clawUpSpeed = 15.0f;
+    float ManualConfig::clawDownSpeed = 15.0f;
+    float ManualConfig::clawUpStopTorque = 0.5f;
+    float ManualConfig::clawDownStopTorque = 0.35f;
+    int ManualConfig::changeif = 0;
 
-    void MannualMove(float speedX, float speedY) {
+    void ManualMove(float speedX, float speedY) {
         enum Status {
             Forward,
             Reverse
         };
         static Status status = Status::Forward;
         static int A = 0;
-        A = MannualConfig::pressChange;
+        A = ManualConfig::pressChange;
         printf("%d\n", status);
         switch (status){
             case Status::Forward:
@@ -47,7 +47,7 @@ namespace Mannual {
         chassis.setFreeSpeed(speedX, speedY);
         chassis.move();
     }
-    void MannualInput() {
+    void ManualInput() {
         enum Status {
             Idle,
             Forward,
@@ -55,8 +55,8 @@ namespace Mannual {
         };
         static Status status = Status::Idle;
         static bool A = 0, B = 0;
-        A = MannualConfig::pressInputIn;
-        B = MannualConfig::pressInputOut;
+        A = ManualConfig::pressInputIn;
+        B = ManualConfig::pressInputOut;
         // printf("x\n");
         switch (status) {
             case Status::Idle:
@@ -91,7 +91,7 @@ namespace Mannual {
                 printf("?");
         }
     }
-    void MannualCircle() {
+    void ManualCircle() {
         enum Status {
             Idle,
             Input,
@@ -100,13 +100,13 @@ namespace Mannual {
         static Status status = Status::Idle;
         static HUSTTimer timer;
         static int A = 0;
-        A = MannualConfig::pressCircle;
+        A = ManualConfig::pressCircle;
         switch (status) {
             case Status::Idle:
                 if (A) {
                     status = Status::Input;
 
-                    Circle.setVelocity(Mannual::MannualConfig::circleForwardSpeed, vex::percentUnits::pct);
+                    Circle.setVelocity(Manual::ManualConfig::circleForwardSpeed, vex::percentUnits::pct);
                     Circle.spin(vex::directionType::fwd);
                 }
                 break;
@@ -115,9 +115,9 @@ namespace Mannual {
                     status = Status::Idle;
                     Circle.stop();
                 } else {
-                    if (Circle.torque(vex::torqueUnits::Nm) > MannualConfig::circleReverseTorque) {
+                    if (Circle.torque(vex::torqueUnits::Nm) > ManualConfig::circleReverseTorque) {
                         timer.reset();
-                        Circle.setVelocity(MannualConfig::circleReverseSpeed, vex::percentUnits::pct);
+                        Circle.setVelocity(ManualConfig::circleReverseSpeed, vex::percentUnits::pct);
                         Circle.spin(vex::directionType::rev);
                         status = Status::Back;
                     }
@@ -129,16 +129,16 @@ namespace Mannual {
                     status = Status::Idle;
                     Circle.stop();
                 } else {
-                    if (timer.getTimeMsec() >= MannualConfig::circleReverseTime) {
+                    if (timer.getTimeMsec() >= ManualConfig::circleReverseTime) {
                         timer.reset();
-                        Circle.setVelocity(MannualConfig::circleForwardSpeed, vex::percentUnits::pct);
+                        Circle.setVelocity(ManualConfig::circleForwardSpeed, vex::percentUnits::pct);
                         Circle.spin(vex::directionType::fwd);
                         status = Status::Input;
                     }
                 }
         }
     }
-    void MannualCatchPlant() {
+    void ManualCatchPlant() {
         enum Status {
             Idle,
             Catching,
@@ -148,7 +148,7 @@ namespace Mannual {
         static Status status = Status::Idle;
         static int A = 0;
         static HUSTTimer timer;
-        A = MannualConfig::pressCatchPlant;
+        A = ManualConfig::pressCatchPlant;
         // printf("%d\n", timer.getTimeMsec());
         switch (status) {
             case Status::Idle:
@@ -156,12 +156,12 @@ namespace Mannual {
                     status = Status::Catching;
                     ClawSwitchL.set(true);
                     ClawSwitchR.set(true);
-                    Claw.setVelocity(MannualConfig::clawUpSpeed, vex::percentUnits::pct);
+                    Claw.setVelocity(ManualConfig::clawUpSpeed, vex::percentUnits::pct);
                     Claw.spin(forward);
                 }
                 break;
             case Status::Catching:
-                if (timer.getTimeMsec() >= MannualConfig::clawUpTime || Claw.torque() > MannualConfig::clawUpStopTorque) {
+                if (timer.getTimeMsec() >= ManualConfig::clawUpTime || Claw.torque() > ManualConfig::clawUpStopTorque) {
                     Claw.stop();
                     status = Status::Hold;
                 }
@@ -171,7 +171,7 @@ namespace Mannual {
                     status = Status::Leaving;
                     ClawSwitchL.set(false);
                     ClawSwitchR.set(false);
-                    Claw.setVelocity(MannualConfig::clawDownSpeed, vex::percentUnits::pct);
+                    Claw.setVelocity(ManualConfig::clawDownSpeed, vex::percentUnits::pct);
                     Claw.spin(reverse);
 
                     timer.reset();
@@ -179,7 +179,7 @@ namespace Mannual {
                 break;
             case Status::Leaving:
                 timer.click();
-                if (timer.getTimeMsec() >= MannualConfig::clawDownTime || Claw.torque() > MannualConfig::clawDownStopTorque) {
+                if (timer.getTimeMsec() >= ManualConfig::clawDownTime || Claw.torque() > ManualConfig::clawDownStopTorque) {
                     Claw.stop();
                     status = Status::Idle;
                 }

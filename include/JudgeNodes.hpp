@@ -10,3 +10,12 @@ private:
     float _distance;
     ControllerModule<float, float> _feedBackModule;
 };
+
+class ColorJudgeNode : public JudgeNode {
+public:
+    ColorJudgeNode(int color, ControllerModule<int, int>& feedbackModule);
+    bool judge() override;
+private:
+    int _color;
+    ControllerModule<int, int> _feedBackModule;
+};

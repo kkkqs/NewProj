@@ -27,7 +27,25 @@ vex::competition Competition;
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
+/*---------------------------------------------------------------------------*/
+/*                                                                           */
+/*                              Auto Catalog                                 */
+/*  1.MoveNode(float distance, float maxSpeed = 50.0, int maxTime = 2000)    */
+/*  2.RotateNode(float angle, float maxSpeed = 50.0, int maxTime = 2000)     */
+/*  3.DelayNode(float time)                                                  */
+/*                                                                           */
+/*  4.DistanceJudgeNode(float distance, ControllerModule)                    */
+/*  5.ColorJudgeNode(int color, ControllerModule<int, int>& feedbackModule)  */
+/*                                                                           */
+/*  Happy coding!                                                            */
+/*---------------------------------------------------------------------------*/
+
+
+
+
 void pre_auton(void) {
+  /*-------------------------------------------------------------------------*/
+  // Examples
   // auto move1 = new MoveNode(500, 20000);
   // auto move2 = new MoveNode(-500, 20000);
   // auto move3 = new RotateNode();
@@ -42,10 +60,11 @@ void pre_auton(void) {
   // auto distanceJudge = new DistanceJudgeNode(300, chassisControllerModule);
   // move4->addJuedgeNode(distanceJudge);
   // #pragma endregion
-
+  // auto colorJudge = new ColorJudgeNode(100, chassisControllerModule);
   // StateMachine::addAutoNode(move4);
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
+  /*-------------------------------------------------------------------------*/
 }
 
 /*---------------------------------------------------------------------------*/
@@ -79,12 +98,12 @@ void autonomous(void) {
 //
 
 void mannualFuncs() {
-  using namespace Mannual;
-  MannualConfig::OrderUpdate();
-  MannualMove(Controller.Axis3.position(), Controller.Axis1.position());
-  MannualInput();
-  MannualCircle();
-  MannualCatchPlant();
+  using namespace Manual;
+  ManualConfig::OrderUpdate();
+  ManualMove(Controller.Axis3.position(), Controller.Axis1.position());
+  ManualInput();
+  ManualCircle();
+  ManualCatchPlant();
 }
 
 int main() {

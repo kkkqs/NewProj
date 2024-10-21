@@ -2,13 +2,13 @@
 #include "RobotConfig.hpp"
 #include "Components/Utils/HUSTTimer.hpp"
 
-namespace Mannual {
-    void MannualMove(float speedX, float speedY);
-    void MannualInput();
-    void MannualCircle();
-    void MannualCatchPlant();
+namespace Manual {
+    void ManualMove(float speedX, float speedY);
+    void ManualInput();
+    void ManualCircle();
+    void ManualCatchPlant();
 
-    class MannualConfig {
+    class ManualConfig {
     public:
         static int pressInputIn;
         static int pressInputOut;

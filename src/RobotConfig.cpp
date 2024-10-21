@@ -21,6 +21,7 @@ vex::controller Controller;
 vex::rotation r1(vex::PORT6, true);
 vex::rotation r2(vex::PORT5);
 vex::inertial imu(vex::PORT7);
+vex::optical Optical(vex::PORT8);
 
 vex::motor LFU(vex::PORT20, true);
 vex::motor LFD(vex::PORT15, false);
@@ -61,8 +62,11 @@ ControllerModule<float, float> chassisControllerModule(chassisPID, chassisFeedba
 #pragma region Circle
 IMUFeedBack imuFeedBack(imu);
 PIDControllerAlgorithm chassisRotaionPID(0.8f, 0.2f, 0.01f);
-ControllerModule<float, float> chassisCircleModule(chassisRotaionPID, imuFeedBack);
+ControllerModule<float, float> chassisRotationModule(chassisRotaionPID, imuFeedBack);
 #pragma endregion
+
+OpticalFeedback opticalFeedback(Optical);
+
 
 // define variable for remote controller enable/disable
 bool RemoteControlCodeEnabled = true;

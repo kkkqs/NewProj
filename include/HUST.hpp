@@ -10,4 +10,4 @@
 #include "ActionNodes.hpp"
 #include "JudgeNodes.hpp"
 #include "FeedBack.hpp"
-#include "Mannual.hpp"
+#include "Manual.hpp"

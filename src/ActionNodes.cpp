@@ -30,18 +30,18 @@ void MoveNode::complement() {
 
 void RotateNode::complement() {
     if (_first) {
-        chassisCircleModule.reset();
-        chassisCircleModule.setTarget(_angle);
+        chassisRotationModule.reset();
+        chassisRotationModule.setTarget(_angle);
         _first = false;
     }
     
     if (andJudge()) _maxSpeed /= 2.0f;
 
-    chassisCircleModule.update();
-    auto value = chassisControllerModule.getOutput();
+    chassisRotationModule.update();
+    auto value = chassisRotationModule.getOutput();
     value = fmin(fabs(value), 100) * sign(value) * _maxSpeed;
     chassis.setSpeed(value, _unit);
-    _done = chassisCircleModule.targetArrived();
+    _done = chassisRotationModule.targetArrived();
     timer.click();
     if (_done) chassis.stop();
     else chassis.rotate();
